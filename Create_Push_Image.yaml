@@ -40,7 +40,7 @@
       
     - name: Do deployment in Docker Swarm cluster
     
-      command: docker service create --name addressbook-app --replicas 1 -p 8282:8080 mithileshindurkar/trainappimage:latest
+      command: docker service create --name trainimage-app --replicas 1 -p 8084:8080 mithileshindurkar/trainappimage:latest
       
       
       
