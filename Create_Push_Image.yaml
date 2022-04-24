@@ -1,0 +1,60 @@
+---
+
+ - name: Ansible playbook
+
+   hosts: localhost
+   
+   become_user: root
+   
+
+   
+
+   tasks:
+   
+    - name: Start the docker server
+      service: name=docker state=started
+      
+    - name: Docker login
+    
+      command: docker login --username mithileshindurkar --password P@ssw0rd123
+      
+
+    - name: Build docker image
+
+      command: docker build -t "trainAppImage" /home/edureka/problemstatement2
+
+      
+
+    - name: Tag image
+
+      command: docker tag trainAppImage mithileshindurkar/trainAppImage
+      
+    
+
+      
+
+    - name: Push the image
+
+      command: docker push mithileshindurkar/trainAppImage
+      
+      
+    - name: Do deployment in Docker Swarm cluster
+    
+      command: docker service create --name addressbook-app --replicas 1 -p 8282:8080 mithileshindurkar/trainAppImage:latest
+      
+      
+      
+      
+    - name: Deploy in kubernetes
+      
+      command: kubectl apply -f /home/edureka/problemstatement2/TrainScheduleDeployment.yaml
+      
+    - name: Service in kubernetes
+      
+      command: kubectl apply -f /home/edureka/problemstatement2/TrainScheduleService.yaml
+      
+    - name: HPA in kubernetes
+      
+      command: kubectl apply -f /home/edureka/problemstatement2/hpa.yaml
+
+      
